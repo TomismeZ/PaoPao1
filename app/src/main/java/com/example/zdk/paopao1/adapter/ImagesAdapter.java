@@ -1,17 +1,23 @@
 package com.example.zdk.paopao1.adapter;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.zdk.paopao1.R;
+import com.example.zdk.paopao1.activity.ImageShowActivity;
 import com.example.zdk.paopao1.bean.ImageInfo;
 
 
@@ -39,8 +45,8 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
-        ImageInfo imageInfo = imageInfos.get(position);
+    public void onBindViewHolder(final ViewHolder holder, int position) {
+        final ImageInfo imageInfo = imageInfos.get(position);
         //加载图片
         Glide.with(context).load(imageInfo.getAvatar()).into(holder.userAvatar);
         holder.username.setText(imageInfo.getUsername());
@@ -49,6 +55,29 @@ public class ImagesAdapter extends RecyclerView.Adapter<ImagesAdapter.ViewHolder
         //添加元素给gridview
         holder.gridView.setAdapter(new GridViewAdapter(context, imageInfo.getImageUrls()));
 
+        holder.gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                Intent intent=new Intent(context, ImageShowActivity.class);
+                intent.putExtra("imageurl",imageInfo.getImageUrls().get(position));
+                context.startActivity(intent);
+//                Glide.with(context).load( imageInfo.getImageUrls().get(position)).into(holder.image_content);
+
+               /* final Dialog dialog=new Dialog(context,R.style.Dialog_FS); //设置全屏样式
+                dialog.setContentView(R.layout.item_girdview_image); //设置dialog的布局
+                ImageView imageView=view.findViewById(R.id.image_url);
+                Glide.with(context).load( imageInfo.getImageUrls().get(position)).into(imageView);
+                dialog.show();
+                // 两秒后关闭后dialog
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dialog.dismiss();
+                    }
+                }, 1000 * 2);*/
+            }
+        });
         Glide.with(context).load(imageInfo.getImageUrl()).into(holder.image_content);
         if (imageInfo.getAgree() > 0) {
             holder.good.setText("赞(" + imageInfo.getAgree() + ")");

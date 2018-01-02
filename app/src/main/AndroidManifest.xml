@@ -3,7 +3,7 @@
     package="com.example.zdk.paopao1">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.OpenDoorActivity"></activity>
+        <activity android:name=".activity.OpenDoorActivity" />
+        <activity android:name=".activity.ImageShowActivity"></activity>
     </application>
 
 </manifest>
